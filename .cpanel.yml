@@ -2,10 +2,10 @@
 deployment:
   tasks:
     # Site dosyalarını public_html'e kopyala
-    - /bin/cp -rf /home/claude_ats/repositories/anahtarteslimsera/site/* /home/claude_ats/public_html/
+    - /bin/cp -rf /home/u2838272/repositories/anahtarteslimsera/site/* /home/u2838272/public_html/
     # * glob nokta-dosyalarını atlar; .htaccess ayrıca kopyalanmalı
-    - /bin/cp -f /home/claude_ats/repositories/anahtarteslimsera/site/.htaccess /home/claude_ats/public_html/.htaccess
+    - /bin/cp -f /home/u2838272/repositories/anahtarteslimsera/site/.htaccess /home/u2838272/public_html/.htaccess
     # storage/leads klasörünün yazılabilir olduğundan emin ol
-    - /bin/mkdir -p /home/claude_ats/public_html/storage/leads
-    - /bin/chmod 755 /home/claude_ats/public_html/storage
-    - /bin/chmod 755 /home/claude_ats/public_html/storage/leads
+    - /bin/mkdir -p /home/u2838272/public_html/storage/leads
+    - /bin/chmod 755 /home/u2838272/public_html/storage
+    - /bin/chmod 755 /home/u2838272/public_html/storage/leads
