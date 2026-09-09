@@ -37,7 +37,7 @@ require_once APP_ROOT . '/inc/header.php';
       <?= e($s['title']) ?>
     </p>
     <?php if ($partner): ?>
-      <p class="disc-firm"><?= e($partner['name']) ?> · <?= e($partner['role']) ?></p>
+      <p class="disc-firm"><?= $partner['url'] ? '<a href="' . e($partner['url']) . '" target="_blank" rel="noopener">' . e($partner['name']) . '</a>' : e($partner['name']) ?> · <?= e($partner['role']) ?></p>
     <?php else: ?>
       <p class="disc-firm">Üç firma ortak · Entegre paket</p>
     <?php endif; ?>

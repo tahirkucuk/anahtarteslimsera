@@ -57,7 +57,7 @@ require_once APP_ROOT . '/inc/header.php';
           <div class="disc-photo">
             <?= picture($s['image'], $s['title'], ['sizes' => '(max-width:900px) 92vw, 33vw']) ?>
           </div>
-          <p class="disc-firm"><?= e($p['name']) ?></p>
+          <p class="disc-firm"><?= $p['url'] ? '<a href="' . e($p['url']) . '" target="_blank" rel="noopener">' . e($p['name']) . '</a>' : e($p['name']) ?></p>
           <h3><?= e($s['title']) ?></h3>
           <p><?= e(excerpt($s['lead'], 140)) ?></p>
           <ul>

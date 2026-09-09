@@ -50,6 +50,7 @@ define('SOCIAL_LINKEDIN',  '');
 const PARTNERS = [
     'prtarim' => [
         'name'  => 'PR Tarım',
+        'url'   => 'https://prtarim.com',
         'role'  => 'Tarımsal danışmanlık',
         'slug'  => 'tarimsal-danismanlik',
         'hue'   => 'agro',
@@ -57,6 +58,7 @@ const PARTNERS = [
     ],
     'ozdemirler' => [
         'name'  => 'Özdemirler Sera',
+        'url'   => '',
         'role'  => 'Sera kurulumu',
         'slug'  => 'sera-kurulumu',
         'hue'   => 'steel',
@@ -64,6 +66,7 @@ const PARTNERS = [
     ],
     'irriga' => [
         'name'  => 'İrriga Mühendislik',
+        'url'   => 'https://irriga.com.tr',
         'role'  => 'Sulama sistemleri',
         'slug'  => 'sulama-sistemleri',
         'hue'   => 'water',
@@ -88,4 +91,4 @@ const IMAGES = [
 // --- Görsel künyesi -----------------------------------------------------
 // Şu an sitedeki fotoğraflar temsilidir. Gerçek saha fotoğrafları
 // yüklendiğinde bunu false yapın; "Temsili görsel" rozetleri kaybolur.
-define('IMAGES_ARE_PLACEHOLDER', true);
+define('IMAGES_ARE_PLACEHOLDER', false);
