@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Gelen lead dosyaları — sunucuda oluşur, repoda yeri yok
+site/storage/leads/*.jsonl
+
+# Geliştirme araçları — repoya dahil etme
+site/dev-router.php

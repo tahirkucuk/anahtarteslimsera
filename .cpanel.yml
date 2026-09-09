@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    # Site dosyalarını public_html'e kopyala
+    - /bin/cp -rf /home/claude_ats/repositories/anahtarteslimsera/site/* /home/claude_ats/public_html/
+    # * glob nokta-dosyalarını atlar; .htaccess ayrıca kopyalanmalı
+    - /bin/cp -f /home/claude_ats/repositories/anahtarteslimsera/site/.htaccess /home/claude_ats/public_html/.htaccess
+    # storage/leads klasörünün yazılabilir olduğundan emin ol
+    - /bin/mkdir -p /home/claude_ats/public_html/storage/leads
+    - /bin/chmod 755 /home/claude_ats/public_html/storage
+    - /bin/chmod 755 /home/claude_ats/public_html/storage/leads

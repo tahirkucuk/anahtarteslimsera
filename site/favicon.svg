@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Anahtar Teslim Sera">
+  <rect width="64" height="64" rx="6" fill="#0F4430"/>
+  <g fill="none" stroke="#7FD9AC" stroke-width="3" stroke-linejoin="round">
+    <path d="M10 34 L21 24 L32 34 L43 24 L54 34"/>
+  </g>
+  <rect x="10" y="34" width="44" height="20" fill="#E9AB58" opacity=".16"/>
+  <g stroke="#7FD9AC" stroke-opacity=".55" stroke-width="2">
+    <path d="M21 34v20M32 34v20M43 34v20"/>
+  </g>
+  <rect x="10" y="52" width="44" height="2.5" fill="#7FD9AC"/>
+</svg>

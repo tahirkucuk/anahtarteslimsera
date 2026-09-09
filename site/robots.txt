@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /inc/
+Disallow: /storage/
+Disallow: /content/
+Disallow: /tesekkurler
+
+Sitemap: https://www.anahtarteslimsera.com/sitemap.xml
