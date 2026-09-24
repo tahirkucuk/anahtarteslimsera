@@ -1,0 +1,46 @@
+[
+  {
+    "slug":       "sera-sulama-otomasyonunun-onemi",
+    "title":      "Modern seralarda sulama otomasyonunun önemi",
+    "date":       "2026-08-18",
+    "author":     "İrriga Mühendislik",
+    "category":   "Sulama",
+    "image":      "damla-sulama-damlatici",
+    "excerpt":    "Otomasyon, sulamayı \"kolaylaştıran\" bir konfor değil; kök bölgesindeki nem ve tuzluluk dalgalanmasını kapatan bir üretim aracıdır. Elle sulanan serada verimin neden dalgalandığını açıklıyoruz.",
+    "meta_title": "Modern Seralarda Sulama Otomasyonunun Önemi",
+    "meta_desc":  "Sera sulama otomasyonu verimi nasıl etkiler? Kök bölgesi nem dengesi, EC-pH kontrolü, su ve gübre tasarrufu ile elle sulamanın gizli maliyeti."
+  },
+  {
+    "slug":       "sera-kurmadan-once-5-danismanlik-hizmeti",
+    "title":      "Sera kurmadan önce bilinmesi gereken 5 danışmanlık hizmeti",
+    "date":       "2026-08-11",
+    "author":     "PR Tarım",
+    "category":   "Danışmanlık",
+    "image":      "tarimsal-danismanlik-agronom",
+    "excerpt":    "Sera yatırımlarında en pahalı hatalar inşaat aşamasında değil, ondan önceki karar aşamasında yapılır. Çelik kesilmeden önce cevaplanması gereken beş başlık.",
+    "meta_title": "Sera Kurmadan Önce Alınması Gereken 5 Danışmanlık Hizmeti",
+    "meta_desc":  "Sera yatırımı öncesi fizibilite, su analizi, ürün seçimi, hibe uygunluğu ve işletme planı. Çelik kesilmeden önce cevaplanması gereken beş soru."
+  },
+  {
+    "slug":       "anahtar-teslim-sera-kurulumu-maliyetleri",
+    "title":      "Anahtar teslim sera kurulumu maliyetleri nelerdir?",
+    "date":       "2026-08-04",
+    "author":     "Anahtar Teslim Sera",
+    "category":   "Yatırım",
+    "image":      "celik-konstruksiyon-montaj",
+    "excerpt":    "Metrekare fiyatı sormak yanlış soru. Maliyeti belirleyen beş kalemi ve bunların hangi kararla değiştiğini, teklif karşılaştırırken nelere bakılacağıyla birlikte anlatıyoruz.",
+    "meta_title": "Anahtar Teslim Sera Kurulumu Maliyetleri Nasıl Hesaplanır?",
+    "meta_desc":  "Sera kurulumu maliyetini belirleyen kalemler: sera tipi, oluk yüksekliği, statik yük, iklimlendirme ve sulama seviyesi. Teklif karşılaştırma rehberi."
+  },
+  {
+    "slug":       "dogru-sulama-sistemini-secmenin-puf-noktalari",
+    "title":      "Sera projenizde doğru sulama sistemini seçmenin püf noktaları",
+    "date":       "2026-07-28",
+    "author":     "İrriga Mühendislik",
+    "category":   "Sulama",
+    "image":      "fertigasyon-filtre-istasyonu",
+    "excerpt":    "Sulama sistemi seçimi damlatıcı markasıyla başlamaz; suyun analiziyle başlar. Filtre seçiminden lateral aralığına kadar kararların hangi sırayla verilmesi gerektiği.",
+    "meta_title": "Sera İçin Doğru Sulama Sistemi Nasıl Seçilir?",
+    "meta_desc":  "Sulama suyu analizi, filtre seçimi, damlatıcı debisi ve lateral aralığı. Sera sulama sistemi seçiminde kararların doğru sırası ve sık yapılan hatalar."
+  }
+]
