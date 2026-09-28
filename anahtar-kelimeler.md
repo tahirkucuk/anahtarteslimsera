@@ -56,7 +56,7 @@
 ### Sulama & Fertigasyon
 - [ ] sera-sulama-suyu-analizi-neden-onemli — "Sera sulama suyu analizi neden yapılır? Hangi değerlere bakılır?"
 - [ ] damla-sulama-lateral-araligı-nasil-secilir — "Damla sulama laterallar arasındaki mesafe nasıl belirlenir?"
-- [ ] fertigasyon-nedir-nasil-calisir — "Fertigasyon nedir? Sera gübrelemesinde nasıl kullanılır?"
+- [x] fertigasyon-nedir-nasil-calisir — "Fertigasyon nedir? Sera gübrelemesinde nasıl kullanılır?"
 - [ ] ec-ph-kontrolu-sera-sulamasinda — "EC ve pH değerleri neden önemli? Sera sulamasında kontrol nasıl yapılır?"
 - [ ] sulama-suyu-debi-hesabi — "Sera sulama sistemi için debi ve pompa kapasitesi nasıl hesaplanır?"
 - [ ] sera-sulamada-yaygın-hatalar — "Sera sulama sisteminde yapılan 6 yaygın hata"
