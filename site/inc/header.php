@@ -63,8 +63,8 @@ gtag('js',new Date());gtag('config','<?= e(GA4_ID) ?>');
 
       <div class="nav-lang">
         <?php $cur_path = $page['path'] ?? '/'; ?>
-        <a class="lang-btn<?= LANG === 'tr' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'tr')) ?>" hreflang="tr" lang="tr">TR</a>
-        <a class="lang-btn<?= LANG === 'en' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'en')) ?>" hreflang="en" lang="en">EN</a>
+        <a class="lang-btn lang-btn-tr<?= LANG === 'tr' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'tr')) ?>" hreflang="tr" lang="tr">TR</a>
+        <a class="lang-btn lang-btn-en<?= LANG === 'en' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'en')) ?>" hreflang="en" lang="en">EN</a>
       </div>
 
       <a class="btn btn-primary nav-cta" href="<?= e(url('/iletisim')) ?>"><?= e(t('nav.cta', 'Teklif Al')) ?></a>
