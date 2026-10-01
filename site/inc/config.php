@@ -19,7 +19,7 @@ define('SITE_TAGLINE', 'Entegre Tarım Çözümleri');
 define('SITE_LOCALE',  'tr_TR');
 
 // CSS/JS önbelleğini kırmak için: dosyaları her değiştirdiğinizde artırın.
-define('ASSET_VER', '1.0.0');
+define('ASSET_VER', '1.1.0');
 
 // --- İletişim -----------------------------------------------------------
 define('CONTACT_PHONE',         '+90 533 471 20 80');
