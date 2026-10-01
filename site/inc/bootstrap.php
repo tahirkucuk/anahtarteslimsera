@@ -10,9 +10,9 @@ declare(strict_types=1);
 date_default_timezone_set('Europe/Istanbul');
 mb_internal_encoding('UTF-8');
 
-// Dil tespiti — /en/ ile başlayan URL'ler İngilizce, geri kalanı Türkçe.
-$_uri = $_SERVER['REQUEST_URI'] ?? '/';
-define('LANG', (str_starts_with($_uri, '/en/') || $_uri === '/en') ? 'en' : 'tr');
+// Dil tespiti — /en/ ile başlayan veya tam /en olan URL'ler İngilizce.
+$_uri = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+define('LANG', (str_starts_with($_uri, '/en/') || $_uri === '/en' || $_uri === '/en/') ? 'en' : 'tr');
 
 if (LANG === 'en') {
     setlocale(LC_ALL, 'en_US.UTF-8', 'en_US', 'C.UTF-8');

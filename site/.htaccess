@@ -29,7 +29,10 @@ RewriteRule ^en/blog/([a-z0-9\-]+)/?$ blog/yazi.php?slug=$1 [L,QSA]
 RewriteRule ^en/sitemap\.xml$ sitemap.php [L]
 # /en or /en/ → index.php
 RewriteRule ^en/?$ index.php [L]
-# /en/some/path → some/path.php (only if file exists)
+# /en/some/path → some/path/index.php (dizin içinde index.php varsa)
+RewriteCond %{DOCUMENT_ROOT}/$1/index.php -f
+RewriteRule ^en/([a-z0-9][a-z0-9/\-]*)/?$ $1/index.php [L,QSA]
+# /en/some/path → some/path.php (doğrudan php dosyası varsa)
 RewriteCond %{DOCUMENT_ROOT}/$1.php -f
 RewriteRule ^en/([a-z0-9][a-z0-9/\-]*)/?$ $1.php [L,QSA]
 
