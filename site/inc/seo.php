@@ -1,21 +1,17 @@
 <?php
 /**
- * SEO — meta etiketleri ve yapısal veri (JSON-LD).
- * Google'ın "Hizmet", "Makale", "SSS" ve "İçerik haritası" zenginleştirmeleri
- * bu dosyadan üretilir.
+ * SEO — meta etiketleri, hreflang ve yapısal veri (JSON-LD).
  */
 
-/** Tarayıcı başlığı: sayfa başlığı + marka. */
 function seo_title(array $page): string
 {
     $t = trim((string) ($page['title'] ?? ''));
     if ($t === '' || $t === SITE_NAME) {
-        return SITE_NAME . ' — ' . SITE_TAGLINE;
+        return SITE_NAME . ' — ' . (LANG === 'en' ? 'Integrated Agricultural Solutions' : SITE_TAGLINE);
     }
     return $t . ' | ' . SITE_NAME;
 }
 
-/** OG görselinin mutlak adresi. */
 function seo_image(array $page): string
 {
     $img = $page['image'] ?? 'og-anahtar-teslim-sera';
@@ -28,17 +24,21 @@ function seo_image(array $page): string
     return abs_url("/assets/img/{$img}.jpg");
 }
 
-/** <head> içine basılan bütün meta etiketleri. */
 function seo_meta(array $page): void
 {
-    $url   = abs_url($page['path'] ?? '/');
-    $title = seo_title($page);
-    $desc  = excerpt((string) ($page['desc'] ?? ''), 158);
-    $img   = seo_image($page);
+    $url    = abs_url($page['path'] ?? '/');
+    $title  = seo_title($page);
+    $desc   = excerpt((string) ($page['desc'] ?? ''), 158);
+    $img    = seo_image($page);
+    $locale = LANG === 'en' ? 'en_US' : 'tr_TR';
+    $path   = $page['path'] ?? '/';
     ?>
     <title><?= e($title) ?></title>
     <meta name="description" content="<?= e($desc) ?>">
     <link rel="canonical" href="<?= e($url) ?>">
+    <link rel="alternate" hreflang="tr" href="<?= e(lang_url($path, 'tr')) ?>">
+    <link rel="alternate" hreflang="en" href="<?= e(lang_url($path, 'en')) ?>">
+    <link rel="alternate" hreflang="x-default" href="<?= e(lang_url($path, 'tr')) ?>">
     <?php if (!empty($page['noindex'])): ?>
     <meta name="robots" content="noindex, nofollow">
     <?php else: ?>
@@ -47,7 +47,7 @@ function seo_meta(array $page): void
 
     <meta property="og:type" content="<?= e($page['type'] ?? 'website') ?>">
     <meta property="og:site_name" content="<?= e(SITE_NAME) ?>">
-    <meta property="og:locale" content="<?= e(SITE_LOCALE) ?>">
+    <meta property="og:locale" content="<?= e($locale) ?>">
     <meta property="og:title" content="<?= e($title) ?>">
     <meta property="og:description" content="<?= e($desc) ?>">
     <meta property="og:url" content="<?= e($url) ?>">
@@ -64,36 +64,34 @@ function seo_meta(array $page): void
     <?php
 }
 
-/** Kuruluş + yerel işletme düğümü — her sayfada basılır. */
 function schema_organization(): array
 {
     $sameAs = array_values(array_filter([
         SOCIAL_FACEBOOK, SOCIAL_INSTAGRAM, SOCIAL_YOUTUBE, SOCIAL_LINKEDIN,
     ]));
 
+    $desc = LANG === 'en'
+        ? 'Turnkey greenhouse solutions combining agricultural consulting, greenhouse construction and irrigation systems in a single contract.'
+        : 'Tarımsal danışmanlık, sera kurulumu ve sulama sistemlerini tek sözleşmede birleştiren anahtar teslim sera çözümleri.';
+
     $node = [
         '@type'       => 'ProfessionalService',
         '@id'         => abs_url('/') . '#organization',
         'name'        => SITE_NAME,
-        'description' => 'Tarımsal danışmanlık, sera kurulumu ve sulama sistemlerini tek sözleşmede birleştiren anahtar teslim sera çözümleri.',
+        'description' => $desc,
         'url'         => abs_url('/'),
         'image'       => abs_url('/assets/img/og-anahtar-teslim-sera.jpg'),
         'telephone'   => CONTACT_PHONE,
         'email'       => CONTACT_EMAIL,
-        'areaServed'  => ['@type' => 'Country', 'name' => 'Türkiye'],
+        'areaServed'  => ['@type' => 'Country', 'name' => LANG === 'en' ? 'Turkey' : 'Türkiye'],
         'address'     => [
-            '@type'           => 'PostalAddress',
-            'streetAddress'   => CONTACT_ADDRESS,
-            'addressCountry'  => 'TR',
+            '@type'          => 'PostalAddress',
+            'streetAddress'  => CONTACT_ADDRESS,
+            'addressCountry' => 'TR',
         ],
-        'knowsAbout'  => [
-            'Anahtar teslim sera kurulumu',
-            'Venlo cam sera',
-            'Damla sulama sistemleri',
-            'Fertigasyon',
-            'Sera sulama otomasyonu',
-            'Tarımsal danışmanlık',
-        ],
+        'knowsAbout'  => LANG === 'en'
+            ? ['Turnkey greenhouse construction', 'Venlo glass greenhouse', 'Drip irrigation systems', 'Fertigation', 'Greenhouse irrigation automation', 'Agricultural consulting']
+            : ['Anahtar teslim sera kurulumu', 'Venlo cam sera', 'Damla sulama sistemleri', 'Fertigasyon', 'Sera sulama otomasyonu', 'Tarımsal danışmanlık'],
     ];
     if ($sameAs) {
         $node['sameAs'] = $sameAs;
@@ -101,13 +99,11 @@ function schema_organization(): array
     return $node;
 }
 
-/** Kırıntı navigasyonu düğümü. */
 function schema_breadcrumbs(array $crumbs): ?array
 {
-    if (!$crumbs) {
-        return null;
-    }
-    $items = [['@type' => 'ListItem', 'position' => 1, 'name' => 'Ana Sayfa', 'item' => abs_url('/')]];
+    if (!$crumbs) return null;
+    $home  = LANG === 'en' ? 'Home' : 'Ana Sayfa';
+    $items = [['@type' => 'ListItem', 'position' => 1, 'name' => $home, 'item' => abs_url('/')]];
     $i = 2;
     foreach ($crumbs as $c) {
         $items[] = [
@@ -120,7 +116,6 @@ function schema_breadcrumbs(array $crumbs): ?array
     return ['@type' => 'BreadcrumbList', 'itemListElement' => $items];
 }
 
-/** Sık sorulan sorular düğümü. */
 function schema_faq(array $faqs): array
 {
     return [
@@ -133,7 +128,6 @@ function schema_faq(array $faqs): array
     ];
 }
 
-/** Hizmet düğümü. */
 function schema_service(array $s): array
 {
     return [
@@ -142,12 +136,11 @@ function schema_service(array $s): array
         'description' => $s['lead'],
         'serviceType' => $s['title'],
         'provider'    => ['@id' => abs_url('/') . '#organization'],
-        'areaServed'  => ['@type' => 'Country', 'name' => 'Türkiye'],
+        'areaServed'  => ['@type' => 'Country', 'name' => LANG === 'en' ? 'Turkey' : 'Türkiye'],
         'url'         => abs_url('/hizmetler/' . $s['slug']),
     ];
 }
 
-/** Makale düğümü. */
 function schema_article(array $p): array
 {
     return [
@@ -161,24 +154,19 @@ function schema_article(array $p): array
         'image'            => abs_url('/assets/img/' . $p['image'] . '-1200.jpg'),
         'mainEntityOfPage' => abs_url('/blog/' . $p['slug']),
         'articleSection'   => $p['category'],
-        'inLanguage'       => 'tr-TR',
+        'inLanguage'       => LANG === 'en' ? 'en' : 'tr-TR',
     ];
 }
 
-/** Toplanan bütün düğümleri tek bir @graph olarak basar. */
 function seo_schema(array $page): void
 {
     $graph = [schema_organization()];
-
     if ($bc = schema_breadcrumbs($page['breadcrumbs'] ?? [])) {
         $graph[] = $bc;
     }
     foreach (($page['schema'] ?? []) as $node) {
-        if ($node) {
-            $graph[] = $node;
-        }
+        if ($node) $graph[] = $node;
     }
-
     $json = json_encode(
         ['@context' => 'https://schema.org', '@graph' => $graph],
         JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES

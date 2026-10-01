@@ -145,6 +145,11 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .nav .sub a{display:block;padding:9px 12px;border:0;border-radius:2px;font-size:14px}
 .nav .sub a:hover{background:var(--canopy-soft);color:var(--canopy)}
 
+.nav-lang{display:flex;align-items:center;gap:4px;margin-left:8px}
+.lang-btn{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.04em;text-decoration:none;padding:4px 8px;border-radius:2px;color:var(--ink-2);border:1px solid transparent;transition:color .15s,border-color .15s}
+.lang-btn:hover{color:var(--ink);border-color:var(--line)}
+.lang-active{color:var(--accent)!important;border-color:var(--accent)!important}
+
 .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:8px;cursor:pointer}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--ink);transition:transform .2s,opacity .2s}
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -169,6 +174,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
   }
   .nav .sub a{padding:7px 0;color:var(--muted)}
   .nav-cta{margin-top:18px;justify-content:center}
+  .nav-lang{margin-left:0;margin-top:14px;justify-content:center;border-top:1px solid var(--line);padding-top:14px}
 }
 
 /* 5. BİLEŞENLER ========================================================== */

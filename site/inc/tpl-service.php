@@ -1,8 +1,4 @@
 <?php
-/**
- * Hizmet sayfası şablonu.
- * Çağıran dosya $service_slug tanımlar, sonra burayı include eder.
- */
 if (!defined('APP_ROOT')) { exit; }
 
 $s = get_service($service_slug ?? '');
@@ -20,7 +16,7 @@ $page = array_merge($page, [
     'path'        => '/hizmetler/' . $s['slug'],
     'image'       => $s['image'],
     'breadcrumbs' => [
-        ['name' => 'Hizmetler', 'path' => '/hizmetler'],
+        ['name' => t('hizmetler.crumb', 'Hizmetler'), 'path' => '/hizmetler'],
         ['name' => $s['title'], 'path' => '/hizmetler/' . $s['slug']],
     ],
     'schema'      => [schema_service($s)],
@@ -32,14 +28,14 @@ require_once APP_ROOT . '/inc/header.php';
 <section class="pagehead" data-hue="<?= e($hue) ?>">
   <div class="wrap">
     <p class="crumbs">
-      <a href="<?= e(url('/')) ?>">Ana Sayfa</a><span>/</span>
-      <a href="<?= e(url('/hizmetler')) ?>">Hizmetler</a><span>/</span>
+      <a href="<?= e(url('/')) ?>"><?= e(t('home', 'Ana Sayfa')) ?></a><span>/</span>
+      <a href="<?= e(url('/hizmetler')) ?>"><?= e(t('hizmetler.crumb', 'Hizmetler')) ?></a><span>/</span>
       <?= e($s['title']) ?>
     </p>
     <?php if ($partner): ?>
       <p class="disc-firm"><?= $partner['url'] ? '<a href="' . e($partner['url']) . '" target="_blank" rel="noopener">' . e($partner['name']) . '</a>' : e($partner['name']) ?> · <?= e($partner['role']) ?></p>
     <?php else: ?>
-      <p class="disc-firm">Üç firma ortak · Entegre paket</p>
+      <p class="disc-firm"><?= e(t('tpl.three_firms', 'Üç firma ortak · Entegre paket')) ?></p>
     <?php endif; ?>
     <h1><?= e($s['title']) ?></h1>
     <p class="lede"><?= e($s['lead']) ?></p>
@@ -50,7 +46,7 @@ require_once APP_ROOT . '/inc/header.php';
   <div class="wrap">
     <div class="grid-2" style="gap:40px;align-items:start">
       <div>
-        <h2 style="font-size:var(--s-2);margin-bottom:20px">Kapsamımız</h2>
+        <h2 style="font-size:var(--s-2);margin-bottom:20px"><?= e(t('tpl.scope.h2', 'Kapsamımız')) ?></h2>
         <ul class="pkg-list" style="grid-template-columns:1fr;margin-top:0">
           <?php foreach ($s['bullets'] as $b): ?>
             <li style="font-size:15px"><?= e($b) ?></li>
@@ -58,14 +54,12 @@ require_once APP_ROOT . '/inc/header.php';
         </ul>
 
         <?php if ($s['slug'] === 'anahtar-teslim-sera'): ?>
-          <p class="note">Entegre pakette teslim tarihi ve teknik performans üç firma tarafından birlikte taahhüt edilir; tek proje müdürü atanır.</p>
+          <p class="note"><?= e(t('tpl.ats.note', 'Entegre pakette teslim tarihi ve teknik performans üç firma tarafından birlikte taahhüt edilir; tek proje müdürü atanır.')) ?></p>
         <?php else: ?>
           <div class="pane next" style="margin-top:32px">
-            <h3>Anahtar teslim projede</h3>
+            <h3><?= e(t('tpl.ats.pane.h3', 'Anahtar teslim projede')) ?></h3>
             <p style="margin-top:10px;color:var(--ink-2);font-size:15px">
-              Bu hizmet, <a href="<?= e(url('/hizmetler/anahtar-teslim-sera')) ?>">anahtar teslim sera çözümünün</a>
-              bir parçası olarak da alınabilir. O zaman kapsam, diğer iki disiplinle aynı teknik şartname
-              ve aynı takvim üzerinden planlanır.
+              <?= sprintf(t('tpl.ats.pane.p', 'Bu hizmet, <a href="%s">anahtar teslim sera çözümünün</a> bir parçası olarak da alınabilir. O zaman kapsam, diğer iki disiplinle aynı teknik şartname ve aynı takvim üzerinden planlanır.'), e(url('/hizmetler/anahtar-teslim-sera'))) ?>
             </p>
           </div>
         <?php endif; ?>
@@ -79,12 +73,11 @@ require_once APP_ROOT . '/inc/header.php';
   </div>
 </section>
 
-<!-- SÜREÇTEKİ YERİ -->
 <section class="band band-alt">
   <div class="wrap">
     <div class="shead">
-      <p class="eyebrow">Süreçteki yeri</p>
-      <h2>Bu iş projenin neresinde duruyor?</h2>
+      <p class="eyebrow"><?= e(t('tpl.process.eyebrow', 'Süreçteki yeri')) ?></p>
+      <h2><?= e(t('tpl.process.h2', 'Bu iş projenin neresinde duruyor?')) ?></h2>
     </div>
     <div class="steps">
       <?php
@@ -108,16 +101,15 @@ require_once APP_ROOT . '/inc/header.php';
   </div>
 </section>
 
-<!-- DİĞER HİZMETLER -->
 <section class="band">
   <div class="wrap">
-    <div class="shead"><p class="eyebrow">Diğer hizmetler</p><h2>Aynı çatı altındaki diğer kalemler</h2></div>
+    <div class="shead"><p class="eyebrow"><?= e(t('tpl.others.eyebrow', 'Diğer hizmetler')) ?></p><h2><?= e(t('tpl.others.h2', 'Aynı çatı altındaki diğer kalemler')) ?></h2></div>
     <div class="grid-3">
       <?php foreach (get_services() as $o):
         if ($o['slug'] === $s['slug']) continue;
         $op = $o['partner'] ? PARTNERS[$o['partner']] : null; ?>
         <a class="single" href="<?= e(url('/hizmetler/' . $o['slug'])) ?>" data-hue="<?= e($op['hue'] ?? 'canopy') ?>">
-          <p class="disc-firm"><?= e($op['name'] ?? 'Entegre paket') ?></p>
+          <p class="disc-firm"><?= e($op['name'] ?? t('tpl.integrated', 'Entegre paket')) ?></p>
           <h4><?= e($o['title']) ?></h4>
           <p><?= e(excerpt($o['lead'], 110)) ?></p>
         </a>
@@ -128,8 +120,8 @@ require_once APP_ROOT . '/inc/header.php';
 
 <section class="band band-soft">
   <div class="wrap" style="text-align:center">
-    <h2 style="font-size:var(--s-3);max-width:26ch;margin:0 auto">Arazinizi ve hedefinizi anlatın, kapsamı birlikte çıkaralım.</h2>
-    <p style="margin-top:28px"><a class="btn btn-primary btn-lg" href="<?= e(url('/iletisim')) ?>">Teklif alın</a></p>
+    <h2 style="font-size:var(--s-3);max-width:26ch;margin:0 auto"><?= e(t('tpl.cta.h2', 'Arazinizi ve hedefinizi anlatın, kapsamı birlikte çıkaralım.')) ?></h2>
+    <p style="margin-top:28px"><a class="btn btn-primary btn-lg" href="<?= e(url('/iletisim')) ?>"><?= e(t('tpl.cta.btn', 'Teklif alın')) ?></a></p>
   </div>
 </section>
 

@@ -1,0 +1,46 @@
+[
+  {
+    "slug":       "sera-sulama-otomasyonunun-onemi",
+    "title":      "Why irrigation automation matters in modern greenhouses",
+    "date":       "2026-08-18",
+    "author":     "İrriga Mühendislik",
+    "category":   "Irrigation",
+    "image":      "damla-sulama-damlatici",
+    "excerpt":    "Automation is not a convenience that 'makes irrigation easier' — it is a production tool that closes humidity and salinity swings in the root zone. We explain why yield fluctuates in manually irrigated greenhouses.",
+    "meta_title": "Why Irrigation Automation Matters in Modern Greenhouses",
+    "meta_desc":  "How does greenhouse irrigation automation affect yield? Root zone moisture balance, EC-pH control, water and fertiliser savings, and the hidden cost of manual irrigation."
+  },
+  {
+    "slug":       "sera-kurmadan-once-5-danismanlik-hizmeti",
+    "title":      "5 consulting services you need before building a greenhouse",
+    "date":       "2026-08-11",
+    "author":     "PR Tarım",
+    "category":   "Consulting",
+    "image":      "tarimsal-danismanlik-agronom",
+    "excerpt":    "The most expensive mistakes in greenhouse investment are not made during construction — they are made in the decision phase before it. Five questions that must be answered before the steel is cut.",
+    "meta_title": "5 Consulting Services You Need Before Building a Greenhouse",
+    "meta_desc":  "Feasibility study, water analysis, crop selection, grant eligibility, and business plan. Five questions to answer before greenhouse construction begins."
+  },
+  {
+    "slug":       "anahtar-teslim-sera-kurulumu-maliyetleri",
+    "title":      "What does a turnkey greenhouse construction cost?",
+    "date":       "2026-08-04",
+    "author":     "Anahtar Teslim Sera",
+    "category":   "Investment",
+    "image":      "celik-konstruksiyon-montaj",
+    "excerpt":    "Asking for the price per square metre is the wrong question. We explain the five cost drivers and which decisions change them — along with what to look for when comparing quotes.",
+    "meta_title": "How to Calculate Turnkey Greenhouse Construction Costs",
+    "meta_desc":  "Greenhouse construction cost drivers: structure type, gutter height, structural load, climate control and irrigation level. A guide to comparing quotes."
+  },
+  {
+    "slug":       "dogru-sulama-sistemini-secmenin-puf-noktalari",
+    "title":      "How to choose the right irrigation system for your greenhouse",
+    "date":       "2026-07-28",
+    "author":     "İrriga Mühendislik",
+    "category":   "Irrigation",
+    "image":      "fertigasyon-filtre-istasyonu",
+    "excerpt":    "Choosing an irrigation system does not start with the dripper brand — it starts with a water analysis. The correct order of decisions, from filter selection to lateral spacing.",
+    "meta_title": "How to Choose the Right Irrigation System for a Greenhouse",
+    "meta_desc":  "Irrigation water analysis, filter selection, dripper flow rate and lateral spacing. The correct decision sequence in greenhouse irrigation system selection and common mistakes."
+  }
+]

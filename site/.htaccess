@@ -1,7 +1,6 @@
 # ==========================================================================
 # ANAHTAR TESLİM SERA — Apache yapılandırması (Natro / cPanel)
 # ==========================================================================
-# Not: Sunucuda mod_rewrite açık olmalıdır. cPanel'de varsayılan olarak açıktır.
 
 Options -Indexes +FollowSymLinks
 DirectoryIndex index.php index.html
@@ -19,22 +18,30 @@ RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # --- 3. .php uzantılı adresleri temiz adrese yönlendir --------------------
-# /surec.php  ->  /surec   (301, tek bir kanonik adres için)
 RewriteCond %{REQUEST_URI} !^/api/
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# --- 4. Blog yazıları -----------------------------------------------------
-# /blog/sera-sulama-otomasyonunun-onemi  ->  blog/yazi.php?slug=...
+# --- 4. İngilizce /en/ prefix routing ------------------------------------
+# /en/blog/slug → blog/yazi.php?slug=slug
+RewriteRule ^en/blog/([a-z0-9\-]+)/?$ blog/yazi.php?slug=$1 [L,QSA]
+# /en/sitemap.xml → sitemap.php
+RewriteRule ^en/sitemap\.xml$ sitemap.php [L]
+# /en or /en/ → index.php
+RewriteRule ^en/?$ index.php [L]
+# /en/some/path → some/path.php (only if file exists)
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^en/([a-z0-9][a-z0-9/\-]*)/?$ $1.php [L,QSA]
+
+# --- 5. Blog yazıları (Türkçe) --------------------------------------------
 RewriteRule ^blog/([a-z0-9\-]+)/?$ blog/yazi.php?slug=$1 [L,QSA]
 
-# --- 5. Temiz adresler ----------------------------------------------------
-# /surec -> surec.php ;  /hizmetler/sera-kurulumu -> hizmetler/sera-kurulumu.php
+# --- 6. Temiz adresler (Türkçe) -------------------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.+?)/?$ $1.php [L]
 
-# --- 6. Sitemap -----------------------------------------------------------
+# --- 7. Sitemap -----------------------------------------------------------
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 </IfModule>
 
@@ -42,7 +49,6 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 ErrorDocument 404 /404.php
 
 # --- Gizli klasörler ------------------------------------------------------
-# Bu klasörler tarayıcıdan doğrudan açılamamalı.
 RedirectMatch 404 ^/(inc|storage|content)/
 <FilesMatch "\.(jsonl|log|md|sql|bak|ini)$">
   Require all denied

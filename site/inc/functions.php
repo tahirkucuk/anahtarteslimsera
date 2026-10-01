@@ -3,7 +3,7 @@
  * Yardımcı fonksiyonlar. Şablonlarda kullanılan her şey burada.
  */
 
-// PHP 7.4 uyumluluğu (Natro'da PHP sürümü 8.0 altındaysa devreye girer)
+// PHP 7.4 uyumluluğu
 if (!function_exists('str_contains')) {
     function str_contains(string $h, string $n): bool { return $n === '' || strpos($h, $n) !== false; }
 }
@@ -17,13 +17,21 @@ function e(?string $s): string
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-/** Site içi bağlantı üretir: url('/hizmetler') */
+/**
+ * Site içi bağlantı üretir: url('/hizmetler')
+ * LANG === 'en' olduğunda /en/ öneki eklenir.
+ */
 function url(string $path = '/'): string
 {
     if (preg_match('#^(https?:)?//#', $path)) {
         return $path;
     }
-    return BASE_PATH . '/' . ltrim($path, '/');
+    // API uç noktaları dil öneki almaz.
+    if (str_starts_with($path, '/api/') || str_starts_with($path, 'api/')) {
+        return BASE_PATH . '/' . ltrim($path, '/');
+    }
+    $prefix = (defined('LANG') && LANG === 'en') ? '/en' : '';
+    return $prefix . BASE_PATH . '/' . ltrim($path, '/');
 }
 
 /** Mutlak bağlantı (canonical, OG, sitemap için) */
@@ -35,13 +43,24 @@ function abs_url(string $path = '/'): string
     return rtrim(SITE_URL, '/') . url($path);
 }
 
+/**
+ * Aynı sayfanın belirli bir dildeki mutlak URL'si.
+ * hreflang ve dil değiştirici için kullanılır.
+ */
+function lang_url(string $path, string $lang): string
+{
+    $base   = rtrim(SITE_URL, '/');
+    $prefix = $lang === 'en' ? '/en' : '';
+    return $base . $prefix . BASE_PATH . '/' . ltrim($path, '/');
+}
+
 /** Varlık bağlantısı + sürüm damgası */
 function asset(string $path): string
 {
     return url('/assets/' . ltrim($path, '/')) . '?v=' . ASSET_VER;
 }
 
-/** Görsel dosyası (sürüm damgasız — srcset içinde gereksiz) */
+/** Görsel dosyası (sürüm damgasız) */
 function img_src(string $name, int $w, string $ext = 'jpg'): string
 {
     return url("/assets/img/{$name}-{$w}.{$ext}");
@@ -49,10 +68,6 @@ function img_src(string $name, int $w, string $ext = 'jpg'): string
 
 /**
  * Duyarlı <picture> üretir.
- *
- * @param string $name  IMAGES anahtarı
- * @param string $alt   Alternatif metin (SEO ve erişilebilirlik için zorunlu)
- * @param array  $o     sizes, class, loading, fetchpriority, ratio
  */
 function picture(string $name, string $alt, array $o = []): string
 {
@@ -89,13 +104,14 @@ function picture(string $name, string $alt, array $o = []): string
         . '</picture>';
 }
 
-/** "Temsili görsel" rozeti — gerçek fotoğraflar gelince config'ten kapatılır. */
+/** "Temsili görsel" rozeti. */
 function placeholder_badge(string $class = 'shot-badge'): string
 {
     if (!IMAGES_ARE_PLACEHOLDER) {
         return '';
     }
-    return '<span class="' . e($class) . '">Temsili görsel</span>';
+    $label = (defined('LANG') && LANG === 'en') ? 'Stock image' : 'Temsili görsel';
+    return '<span class="' . e($class) . '">' . $label . '</span>';
 }
 
 /** Menüde aktif bağlantıyı işaretler. */
@@ -104,27 +120,37 @@ function nav_active(string $path): string
     $cur = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
     $cur = rtrim($cur, '/');
     $tgt = rtrim(url($path), '/');
-    if ($tgt === '' ) {
-        $tgt = '/';
+    if ($tgt === '') { $tgt = '/'; }
+    if ($cur === '') { $cur = '/'; }
+    // Türkçe ana sayfa özel durumu
+    if ($tgt === '' && ($cur === '' || $cur === '/')) {
+        return ' aria-current="page"';
     }
-    if ($cur === '' ) {
-        $cur = '/';
+    // İngilizce ana sayfa
+    if ($tgt === '/en' && ($cur === '/en' || $cur === '/en/')) {
+        return ' aria-current="page"';
     }
-    if ($cur === $tgt || ($tgt !== '/' && str_starts_with($cur, $tgt . '/'))) {
+    if ($cur === $tgt || ($tgt !== '/' && $tgt !== '/en' && str_starts_with($cur, $tgt . '/'))) {
         return ' aria-current="page"';
     }
     return '';
 }
 
-/** Tarihi Türkçe yazar: 12 Mart 2026 */
+/** Tarihi yerelleştirilmiş biçimde yazar. */
 function tr_date(string $iso): string
 {
-    static $ay = [1=>'Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
     $t = strtotime($iso);
-    return $t ? date('j', $t) . ' ' . $ay[(int) date('n', $t)] . ' ' . date('Y', $t) : $iso;
+    if (!$t) return $iso;
+
+    if (defined('LANG') && LANG === 'en') {
+        return date('F j, Y', $t);
+    }
+
+    static $ay = [1=>'Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    return date('j', $t) . ' ' . $ay[(int) date('n', $t)] . ' ' . date('Y', $t);
 }
 
-/** Metni belirli uzunlukta kırpar (meta açıklama üretirken kullanışlı). */
+/** Metni belirli uzunlukta kırpar. */
 function excerpt(string $text, int $len = 155): string
 {
     $text = trim(preg_replace('/\s+/u', ' ', strip_tags($text)));
@@ -161,7 +187,7 @@ function csrf_check(?string $token): bool
     return !empty($_SESSION['csrf']) && is_string($token) && hash_equals($_SESSION['csrf'], $token);
 }
 
-/** Başlıktan URL parçası üretir (Türkçe karakter duyarlı). */
+/** Başlıktan URL parçası üretir. */
 function slugify(string $s): string
 {
     $tr = ['ı'=>'i','İ'=>'i','ş'=>'s','Ş'=>'s','ğ'=>'g','Ğ'=>'g','ü'=>'u','Ü'=>'u','ö'=>'o','Ö'=>'o','ç'=>'c','Ç'=>'c'];
@@ -169,4 +195,42 @@ function slugify(string $s): string
     $s  = mb_strtolower($s, 'UTF-8');
     $s  = preg_replace('/[^a-z0-9]+/u', '-', $s);
     return trim($s, '-');
+}
+
+/**
+ * Çeviri yardımcısı. LANG === 'en' olduğunda lang/en.php'den çeker.
+ * LANG === 'tr' ya da anahtar bulunamazsa $tr_fallback döner.
+ *
+ * @param string $key         lang/en.php'deki anahtar
+ * @param string $tr_fallback Türkçe yedek metin (şablonlarda orijinal)
+ * @param bool   $raw         true → e() uygulanmaz (HTML içeriyorsa)
+ */
+function t(string $key, string $tr_fallback = '', bool $raw = false): string
+{
+    if (!defined('LANG') || LANG !== 'en') {
+        return $tr_fallback;
+    }
+    static $strings = null;
+    if ($strings === null) {
+        $file = defined('APP_ROOT') ? APP_ROOT . '/inc/lang/en.php' : __DIR__ . '/lang/en.php';
+        $strings = is_file($file) ? (require $file) : [];
+    }
+    $val = $strings[$key] ?? $tr_fallback;
+    return $raw ? $val : $val;
+}
+
+/**
+ * Çeviri dizisi döner (iletisim.php ürün/kapsam listeleri için).
+ */
+function t_array(string $key): array
+{
+    if (!defined('LANG') || LANG !== 'en') {
+        return [];
+    }
+    static $strings = null;
+    if ($strings === null) {
+        $file = defined('APP_ROOT') ? APP_ROOT . '/inc/lang/en.php' : __DIR__ . '/lang/en.php';
+        $strings = is_file($file) ? (require $file) : [];
+    }
+    return $strings[$key] ?? [];
 }

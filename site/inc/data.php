@@ -1,25 +1,91 @@
 <?php
 /**
- * İÇERİK KATMANI — PANEL ENTEGRASYON NOKTASI
- * ==================================================================
- * Sitedeki bütün dinamik içerik yalnızca aşağıdaki fonksiyonlardan okunur.
- * Şablonlar veriye başka hiçbir yerden erişmez.
- *
- * Kendi yönetim panelinizi bağlarken:
- *   1. Her fonksiyonun GÖVDESİNİ veritabanı sorgusuyla değiştirin.
- *   2. DÖNÜŞ ŞEMASINI (aşağıdaki anahtar isimleri) aynen koruyun.
- *   3. Şablonlarda hiçbir değişiklik gerekmez.
- *
- * Şemalar her fonksiyonun üstünde yazılıdır.
+ * İÇERİK KATMANI — Tüm dinamik içerik LANG'e göre döner.
  */
 
 // ======================================================================
 // HİZMETLER
-// Şema: slug, title, partner (PARTNERS anahtarı ya da null), lead,
-//       image, bullets[], meta_title, meta_desc
 // ======================================================================
 function get_services(): array
 {
+    if (defined('LANG') && LANG === 'en') {
+        return [
+            'anahtar-teslim-sera' => [
+                'slug'    => 'anahtar-teslim-sera',
+                'title'   => 'Turnkey Greenhouse Solution',
+                'partner' => null,
+                'image'   => 'sera-kompleksi-havadan',
+                'lead'    => 'One contract from land survey to the end of the first harvest season. Three firms work under one project manager, jointly committing to delivery date and technical performance.',
+                'bullets' => [
+                    'Land, soil and water source survey',
+                    'Crop selection and yield modelling',
+                    'Greenhouse type decision and structural design',
+                    'Heating and climate control design',
+                    'Drip irrigation and fertigation project',
+                    'Automation and remote monitoring installation',
+                    'Grant / IPARD application file and technical annexes',
+                    'Assembly, testing and commissioning',
+                    'Staff training and user manual',
+                    'First-season agronomic monitoring',
+                ],
+                'meta_title' => 'Turnkey Greenhouse Construction | Consulting, Construction and Irrigation in One Contract',
+                'meta_desc'  => 'Turnkey greenhouse construction from feasibility to first harvest. Agricultural consulting, steel structure and irrigation automation under one project manager, on one schedule.',
+            ],
+            'tarimsal-danismanlik' => [
+                'slug'    => 'tarimsal-danismanlik',
+                'title'   => 'Agricultural Consulting',
+                'partner' => 'prtarim',
+                'image'   => 'tarimsal-danismanlik-agronom',
+                'lead'    => 'The yield and market side of the investment. What to grow, at what yield and at what cost — all settled before construction begins. The decisions that define greenhouse type and irrigation flow rate happen at this stage.',
+                'bullets' => [
+                    'Crop and market feasibility',
+                    'Soil, irrigation water and climate analysis',
+                    'Plant nutrition and growing programme',
+                    'Grant / IPARD application file preparation',
+                    'Business plan and cost model',
+                    'First-season on-site agronomic monitoring',
+                ],
+                'meta_title' => 'Greenhouse Investment Consulting | Feasibility, Yield Plan and Grant Application',
+                'meta_desc'  => 'Agricultural consulting for greenhouse investment: crop and market feasibility, soil and water analysis, plant nutrition programme, IPARD grant application and business plan.',
+            ],
+            'sera-kurulumu' => [
+                'slug'    => 'sera-kurulumu',
+                'title'   => 'Greenhouse Construction',
+                'partner' => 'ozdemirler',
+                'image'   => 'celik-konstruksiyon-montaj',
+                'lead'    => 'The structure itself. Galvanized steel frame, cladding system, heating and ventilation — from structural calculation to on-site installation, all from one hand.',
+                'bullets' => [
+                    'Galvanized steel structure manufacturing',
+                    'Venlo glass, polycarbonate and plastic tunnel greenhouses',
+                    'Heating, ventilation and shading systems',
+                    'Structural calculations for snow and wind loads',
+                    'Ground preparation and foundation works',
+                    'Site installation, testing and handover',
+                ],
+                'meta_title' => 'Modern Greenhouse Construction | Venlo Glass, Polycarbonate and Plastic Tunnel',
+                'meta_desc'  => 'Modern greenhouse construction with galvanized steel structure. Venlo glass, polycarbonate and plastic tunnel types; structural calculation, heating/ventilation and site installation.',
+            ],
+            'sulama-sistemleri' => [
+                'slug'    => 'sulama-sistemleri',
+                'title'   => 'Irrigation Systems',
+                'partner' => 'irriga',
+                'image'   => 'fertigasyon-filtre-istasyonu',
+                'lead'    => 'The line that delivers water to the plant. From pump capacity to dripper flow rate, every component is calculated together with the greenhouse bay width and plant row count.',
+                'bullets' => [
+                    'Drip irrigation design and installation',
+                    'Fertigation (liquid fertilization) unit',
+                    'Sand and disc filter station, pump group',
+                    'Irrigation automation and sensors',
+                    'Remote monitoring and reporting',
+                    'Commissioning and user training',
+                ],
+                'meta_title' => 'Greenhouse Irrigation Automation and Drip Irrigation Systems',
+                'meta_desc'  => 'Drip irrigation, fertigation unit, filter station and irrigation automation for greenhouses and open fields. Design, installation, commissioning and remote monitoring.',
+            ],
+        ];
+    }
+
+    // Türkçe
     return [
         'anahtar-teslim-sera' => [
             'slug'    => 'anahtar-teslim-sera',
@@ -103,10 +169,33 @@ function get_service(string $slug): ?array
 
 // ======================================================================
 // SÜREÇ AŞAMALARI
-// Şema: no, title, body, owner, duration, hue
 // ======================================================================
 function get_process(): array
 {
+    if (defined('LANG') && LANG === 'en') {
+        return [
+            ['no' => '01', 'hue' => 'agro',   'owner' => 'PR Tarım',         'duration' => '2 – 4 weeks',
+             'title' => 'Discovery and feasibility',
+             'body'  => 'Site visit, soil and irrigation water analysis, climate data. Decisions on what to grow, at what yield and for which market are made. Output: investment size and target yield.'],
+
+            ['no' => '02', 'hue' => 'canopy', 'owner' => 'All three firms',   'duration' => '3 – 5 weeks',
+             'title' => 'Project, specification and quote',
+             'body'  => 'Greenhouse type, gutter height, heating capacity and irrigation flow rate are jointly determined based on the crop plan. Single technical specification, single price, single schedule. The grant application file is prepared at this stage if required.'],
+
+            ['no' => '03', 'hue' => 'steel',  'owner' => 'Özdemirler Sera',  'duration' => '10 – 20 weeks',
+             'title' => 'Construction and installation',
+             'body'  => 'Ground preparation, foundations, galvanized steel erection, cladding system, heating and ventilation equipment installation. Irrigation routing channels are left ready during this phase.'],
+
+            ['no' => '04', 'hue' => 'water',  'owner' => 'İrriga',           'duration' => '3 – 6 weeks',
+             'title' => 'Irrigation, fertigation and automation',
+             'body'  => 'Pump group, filter station, main and sub-lines, dripper installation, fertigation unit and control panel. System handed over with pressure and flow testing.'],
+
+            ['no' => '05', 'hue' => 'canopy', 'owner' => 'PR Tarım + Service', 'duration' => '12 months',
+             'title' => 'Commissioning and first-season monitoring',
+             'body'  => 'Staff training, implementing the planting plan, calibrating the nutrition programme on site. Periodic agronomic check and technical service throughout the first growing season.'],
+        ];
+    }
+
     return [
         ['no' => '01', 'hue' => 'agro',  'owner' => 'PR Tarım',        'duration' => '2 – 4 hafta',
          'title' => 'Keşif ve fizibilite',
@@ -132,10 +221,28 @@ function get_process(): array
 
 // ======================================================================
 // SERA TİPLERİ
-// Şema: name, light, gutter, snow, crops, level, hue, bars{light,gutter,snow}
 // ======================================================================
 function get_types(): array
 {
+    if (defined('LANG') && LANG === 'en') {
+        return [
+            ['name' => 'Venlo glass greenhouse', 'hue' => 'canopy',
+             'light' => '89 – 92%', 'gutter' => '4.5 – 6.5 m', 'snow' => '40 – 75 kg/m²',
+             'crops' => 'Tomato, cucumber, ornamental plants', 'level' => 'High',
+             'bars'  => ['light' => 95, 'gutter' => 88, 'snow' => 62]],
+
+            ['name' => 'Polycarbonate greenhouse', 'hue' => 'steel',
+             'light' => '80 – 83%', 'gutter' => '4.0 – 5.5 m', 'snow' => '60 – 90 kg/m²',
+             'crops' => 'Seedling production, medicinal plants, cuttings', 'level' => 'Medium – high',
+             'bars'  => ['light' => 82, 'gutter' => 74, 'snow' => 80]],
+
+            ['name' => 'Plastic tunnel (double-layer PE)', 'hue' => 'water',
+             'light' => '85 – 88%', 'gutter' => '3.0 – 4.5 m', 'snow' => '25 – 40 kg/m²',
+             'crops' => 'Tomato, pepper, strawberry, greens', 'level' => 'Medium',
+             'bars'  => ['light' => 88, 'gutter' => 56, 'snow' => 38]],
+        ];
+    }
+
     return [
         ['name' => 'Venlo cam sera', 'hue' => 'canopy',
          'light' => '%89 – 92', 'gutter' => '4,5 – 6,5 m', 'snow' => '40 – 75 kg/m²',
@@ -156,14 +263,57 @@ function get_types(): array
 
 // ======================================================================
 // PROJELER / REFERANSLAR
-// Şema: slug, title, image, scope, hue, featured(bool),
-//       meta[] => ['Konum'=>'…','Kapalı alan'=>'…', …]
-//
-// YAPILACAK: aşağıdaki üç kayıt yer tutucudur. Gerçek proje künyeleri
-// ve saha fotoğrafları geldiğinde bunları değiştirin.
 // ======================================================================
 function get_projects(int $limit = 0): array
 {
+    if (defined('LANG') && LANG === 'en') {
+        $rows = [
+            [
+                'slug'     => 'anahtar-teslim-domates-serasi',
+                'title'    => 'Turnkey tomato greenhouse',
+                'image'    => 'sera-ic-mekan-domates',
+                'hue'      => 'agro',
+                'scope'    => 'Consulting + Construction + Irrigation',
+                'featured' => true,
+                'meta'     => [
+                    'Location'      => '—',
+                    'Enclosed area' => '— decares',
+                    'Type'          => 'Venlo glass',
+                    'Delivery'      => '—',
+                ],
+            ],
+            [
+                'slug'     => 'fide-uretim-tesisi',
+                'title'    => 'Seedling production facility',
+                'image'    => 'plastik-tunel-sera',
+                'hue'      => 'steel',
+                'scope'    => 'Construction + Irrigation',
+                'featured' => true,
+                'meta'     => [
+                    'Location'      => '—',
+                    'Enclosed area' => '— decares',
+                    'Type'          => 'Plastic tunnel',
+                    'Delivery'      => '—',
+                ],
+            ],
+            [
+                'slug'     => 'acik-arazi-damla-sulama',
+                'title'    => 'Open-field drip irrigation',
+                'image'    => 'damla-sulama-damlatici',
+                'hue'      => 'water',
+                'scope'    => 'Irrigation only',
+                'featured' => true,
+                'meta'     => [
+                    'Location'       => '—',
+                    'Irrigated area' => '— decares',
+                    'System'         => 'Drip + fertigation',
+                    'Delivery'       => '—',
+                ],
+            ],
+        ];
+        return $limit > 0 ? array_slice($rows, 0, $limit) : $rows;
+    }
+
     $rows = [
         [
             'slug'  => 'anahtar-teslim-domates-serasi',
@@ -208,22 +358,25 @@ function get_projects(int $limit = 0): array
             ],
         ],
     ];
-
     return $limit > 0 ? array_slice($rows, 0, $limit) : $rows;
 }
 
 // ======================================================================
 // BLOG
-// Şema: slug, title, date (Y-m-d), author, category, image, excerpt,
-//       meta_title, meta_desc
-// Yazının gövdesi: content/blog/<slug>.html
-// Künye kaynağı : content/blog/posts.json (ajan buraya ekler)
 // ======================================================================
 function get_posts(int $limit = 0): array
 {
-    $jsonFile = dirname(__DIR__) . '/content/blog/posts.json';
-    $rows = [];
+    $lang     = defined('LANG') ? LANG : 'tr';
+    $jsonFile = $lang === 'en'
+        ? dirname(__DIR__) . '/content/blog/posts.en.json'
+        : dirname(__DIR__) . '/content/blog/posts.json';
 
+    // Fallback: İngilizce JSON yoksa Türkçeyi göster
+    if (!is_readable($jsonFile)) {
+        $jsonFile = dirname(__DIR__) . '/content/blog/posts.json';
+    }
+
+    $rows = [];
     if (is_readable($jsonFile)) {
         $decoded = json_decode(file_get_contents($jsonFile), true);
         if (is_array($decoded)) {
@@ -239,10 +392,17 @@ function get_post(string $slug): ?array
 {
     foreach (get_posts() as $p) {
         if ($p['slug'] === $slug) {
-            $file = dirname(__DIR__) . '/content/blog/' . $slug . '.html';
-            $body = is_file($file) ? file_get_contents($file) : '';
-            // Yazı içindeki {{u}} işaretçisi site köküne çevrilir; böylece
-            // site alt klasöre kurulsa bile iç bağlantılar bozulmaz.
+            $lang = defined('LANG') ? LANG : 'tr';
+            if ($lang === 'en') {
+                $file = dirname(__DIR__) . '/content/blog/en/' . $slug . '.html';
+                // Fallback to Turkish if English body not yet available
+                if (!is_file($file)) {
+                    $file = dirname(__DIR__) . '/content/blog/' . $slug . '.html';
+                }
+            } else {
+                $file = dirname(__DIR__) . '/content/blog/' . $slug . '.html';
+            }
+            $body    = is_file($file) ? file_get_contents($file) : '';
             $p['body'] = str_replace('{{u}}', BASE_PATH, $body);
             return $p;
         }
@@ -252,10 +412,31 @@ function get_post(string $slug): ?array
 
 // ======================================================================
 // SIK SORULAN SORULAR
-// Şema: q, a  — FAQPage JSON-LD'si buradan üretilir.
 // ======================================================================
 function get_faqs(): array
 {
+    if (defined('LANG') && LANG === 'en') {
+        return [
+            ['q' => 'What determines the cost of a turnkey greenhouse?',
+             'a' => 'Three main items determine cost: greenhouse type and gutter height, heating and climate control capacity, and irrigation and automation level. The site\'s snow and wind load drives the structural calculation and therefore the steel tonnage. After the survey we provide per-item pricing against a single technical specification.'],
+
+            ['q' => 'How long does the whole project take?',
+             'a' => 'For a typical 20-decare project, 5 – 9 months from survey to commissioning. The factors that affect duration most are ground conditions, import equipment lead times and grant approval timelines. A single delivery date is specified in the contract.'],
+
+            ['q' => 'Can I benefit from grants and IPARD support?',
+             'a' => 'Eligibility depends on land classification, investor status and the conditions of the current call. We check eligibility during the feasibility phase and prepare the application file in exact technical alignment with the construction and irrigation specifications — technical inconsistencies in the annexes are among the most common rejection reasons.'],
+
+            ['q' => 'How do warranty and service work?',
+             'a' => 'In a turnkey project we provide a single service line. Item-level warranty periods for structure, equipment and irrigation system are defined in a contract annex; in the event of a fault, your single point of contact is the same project manager.'],
+
+            ['q' => 'Can I commission only irrigation or only consulting?',
+             'a' => 'Yes. All three firms continue to operate independently in their own fields. You can use the same contact channel to retrofit irrigation automation to an existing greenhouse or to commission a feasibility study only.'],
+
+            ['q' => 'Which regions do you operate in?',
+             'a' => 'We carry out projects throughout Turkey. Team deployment for site visits and installation is planned according to project size; sharing your province in the contact form will speed up scheduling.'],
+        ];
+    }
+
     return [
         ['q' => 'Anahtar teslim sera kurulumu maliyeti neye göre değişir?',
          'a' => 'Maliyeti belirleyen üç ana kalem var: sera tipi ve oluk yüksekliği, ısıtma–iklimlendirme kapasitesi, sulama ve otomasyon seviyesi. Arazinin kar ve rüzgâr yükü statik hesabı, dolayısıyla çelik tonajını doğrudan etkiler. Etüt sonrası tek şartname üzerinden kalem kalem fiyatlandırma sunuyoruz.'],

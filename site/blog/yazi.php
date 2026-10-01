@@ -17,10 +17,10 @@ $page = array_merge($page, [
     'image'       => $post['image'],
     'type'        => 'article',
     'breadcrumbs' => [
-        ['name' => 'Blog', 'path' => '/blog'],
+        ['name' => t('yazi.blog', 'Blog'), 'path' => '/blog'],
         ['name' => $post['title'], 'path' => '/blog/' . $post['slug']],
     ],
-    'schema'      => [schema_article($post)],
+    'schema' => [schema_article($post)],
 ]);
 
 require_once APP_ROOT . '/inc/header.php';
@@ -32,8 +32,8 @@ $others = array_values(array_filter(get_posts(), fn($p) => $p['slug'] !== $post[
   <section class="pagehead">
     <div class="wrap">
       <p class="crumbs">
-        <a href="<?= e(url('/')) ?>">Ana Sayfa</a><span>/</span>
-        <a href="<?= e(url('/blog')) ?>">Blog</a><span>/</span><?= e($post['category']) ?>
+        <a href="<?= e(url('/')) ?>"><?= e(t('home', 'Ana Sayfa')) ?></a><span>/</span>
+        <a href="<?= e(url('/blog')) ?>"><?= e(t('yazi.blog', 'Blog')) ?></a><span>/</span><?= e($post['category']) ?>
       </p>
       <h1><?= e($post['title']) ?></h1>
       <p class="post-meta" style="margin-top:18px">
@@ -53,13 +53,13 @@ $others = array_values(array_filter(get_posts(), fn($p) => $p['slug'] !== $post[
         </figure>
 
         <div class="prose">
-          <?= $post['body'] /* içerik dosyadan gelir, güvenilir kaynak */ ?>
+          <?= $post['body'] ?>
         </div>
 
         <div class="article-cta">
-          <h2>Bu konuyu kendi arazinizde konuşalım</h2>
-          <p>Yazıdaki aralıklar genel değerlerdir. Sizin arazinizde neyin geçerli olduğunu keşif ve fizibilite aşaması söyler — ilk görüşme ücretsizdir.</p>
-          <a class="btn btn-primary" href="<?= e(url('/iletisim')) ?>">Fizibilite görüşmesi talep edin</a>
+          <h2><?= e(t('yazi.cta.h2', 'Bu konuyu kendi arazinizde konuşalım')) ?></h2>
+          <p><?= e(t('yazi.cta.p', 'Yazıdaki aralıklar genel değerlerdir. Sizin arazinizde neyin geçerli olduğunu keşif ve fizibilite aşaması söyler — ilk görüşme ücretsizdir.')) ?></p>
+          <a class="btn btn-primary" href="<?= e(url('/iletisim')) ?>"><?= e(t('yazi.cta.btn', 'Fizibilite görüşmesi talep edin')) ?></a>
         </div>
       </div>
     </div>
@@ -68,7 +68,10 @@ $others = array_values(array_filter(get_posts(), fn($p) => $p['slug'] !== $post[
 
 <section class="band band-alt">
   <div class="wrap">
-    <div class="shead"><p class="eyebrow">Devamı</p><h2>Diğer yazılar</h2></div>
+    <div class="shead">
+      <p class="eyebrow"><?= e(t('yazi.more.eyebrow', 'Devamı')) ?></p>
+      <h2><?= e(t('yazi.more.h2', 'Diğer yazılar')) ?></h2>
+    </div>
     <div class="postlist">
       <?php foreach (array_slice($others, 0, 3) as $p): ?>
         <a class="post-card" href="<?= e(url('/blog/' . $p['slug'])) ?>">
@@ -77,7 +80,7 @@ $others = array_values(array_filter(get_posts(), fn($p) => $p['slug'] !== $post[
             <p class="post-meta"><b><?= e($p['category']) ?></b> <span><?= e(tr_date($p['date'])) ?></span></p>
             <h3><?= e($p['title']) ?></h3>
             <p><?= e(excerpt($p['excerpt'], 120)) ?></p>
-            <span class="post-more">Yazıyı okuyun →</span>
+            <span class="post-more"><?= e(t('yazi.read', 'Yazıyı okuyun →')) ?></span>
           </div>
         </a>
       <?php endforeach; ?>

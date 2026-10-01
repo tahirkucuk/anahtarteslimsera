@@ -1,6 +1,6 @@
 <?php if (!defined('APP_ROOT')) { exit; } ?>
 <!doctype html>
-<html lang="tr">
+<html lang="<?= LANG === 'en' ? 'en' : 'tr' ?>">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +29,7 @@ gtag('js',new Date());gtag('config','<?= e(GA4_ID) ?>');
 </head>
 <body class="<?= e($page['body_class']) ?>">
 
-<a class="skip" href="#icerik">İçeriğe geç</a>
+<a class="skip" href="#icerik"><?= e(t('skip', 'İçeriğe geç')) ?></a>
 
 <header class="site-head">
   <div class="wrap head-inner">
@@ -37,30 +37,37 @@ gtag('js',new Date());gtag('config','<?= e(GA4_ID) ?>');
       <img class="brand-mark" src="<?= e(url('/favicon.svg')) ?>" alt="" width="34" height="34" aria-hidden="true">
       <span class="brand-text">
         <span class="brand-name">ANAHTAR TESLİM SERA</span>
-        <span class="brand-tag">Entegre Tarım Çözümleri</span>
+        <span class="brand-tag"><?= e(t('brand.tag', 'Entegre Tarım Çözümleri')) ?></span>
       </span>
     </a>
 
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="ana-menu" aria-label="Menüyü aç">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="ana-menu" aria-label="<?= e(t('nav.menu-label', 'Menüyü aç')) ?>">
       <span></span><span></span><span></span>
     </button>
 
-    <nav id="ana-menu" class="nav" aria-label="Ana menü">
+    <nav id="ana-menu" class="nav" aria-label="<?= LANG === 'en' ? 'Main menu' : 'Ana menü' ?>">
       <ul>
         <li class="has-sub">
-          <a href="<?= e(url('/hizmetler')) ?>"<?= nav_active('/hizmetler') ?>>Hizmetler</a>
+          <a href="<?= e(url('/hizmetler')) ?>"<?= nav_active('/hizmetler') ?>><?= e(t('nav.services', 'Hizmetler')) ?></a>
           <ul class="sub">
             <?php foreach (get_services() as $s): ?>
               <li><a href="<?= e(url('/hizmetler/' . $s['slug'])) ?>"><?= e($s['title']) ?></a></li>
             <?php endforeach; ?>
           </ul>
         </li>
-        <li><a href="<?= e(url('/surec')) ?>"<?= nav_active('/surec') ?>>Süreç</a></li>
-        <li><a href="<?= e(url('/projeler')) ?>"<?= nav_active('/projeler') ?>>Projeler</a></li>
-        <li><a href="<?= e(url('/blog')) ?>"<?= nav_active('/blog') ?>>Blog</a></li>
-        <li><a href="<?= e(url('/iletisim')) ?>"<?= nav_active('/iletisim') ?>>İletişim</a></li>
+        <li><a href="<?= e(url('/surec')) ?>"<?= nav_active('/surec') ?>><?= e(t('nav.process', 'Süreç')) ?></a></li>
+        <li><a href="<?= e(url('/projeler')) ?>"<?= nav_active('/projeler') ?>><?= e(t('nav.projects', 'Projeler')) ?></a></li>
+        <li><a href="<?= e(url('/blog')) ?>"<?= nav_active('/blog') ?>><?= e(t('nav.blog', 'Blog')) ?></a></li>
+        <li><a href="<?= e(url('/iletisim')) ?>"<?= nav_active('/iletisim') ?>><?= e(t('nav.contact', 'İletişim')) ?></a></li>
       </ul>
-      <a class="btn btn-primary nav-cta" href="<?= e(url('/iletisim')) ?>">Teklif Al</a>
+
+      <div class="nav-lang">
+        <?php $cur_path = $page['path'] ?? '/'; ?>
+        <a class="lang-btn<?= LANG === 'tr' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'tr')) ?>" hreflang="tr" lang="tr">TR</a>
+        <a class="lang-btn<?= LANG === 'en' ? ' lang-active' : '' ?>" href="<?= e(lang_url($cur_path, 'en')) ?>" hreflang="en" lang="en">EN</a>
+      </div>
+
+      <a class="btn btn-primary nav-cta" href="<?= e(url('/iletisim')) ?>"><?= e(t('nav.cta', 'Teklif Al')) ?></a>
     </nav>
   </div>
 </header>

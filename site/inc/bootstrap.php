@@ -9,10 +9,18 @@ declare(strict_types=1);
 
 date_default_timezone_set('Europe/Istanbul');
 mb_internal_encoding('UTF-8');
-setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'turkish');
+
+// Dil tespiti — /en/ ile başlayan URL'ler İngilizce, geri kalanı Türkçe.
+$_uri = $_SERVER['REQUEST_URI'] ?? '/';
+define('LANG', (str_starts_with($_uri, '/en/') || $_uri === '/en') ? 'en' : 'tr');
+
+if (LANG === 'en') {
+    setlocale(LC_ALL, 'en_US.UTF-8', 'en_US', 'C.UTF-8');
+} else {
+    setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'turkish');
+}
 
 // Yayında hataları ekrana basmayın; cPanel'de error_log dosyasına düşer.
-// Geliştirirken şu iki satırı 1 / E_ALL yapın.
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 
