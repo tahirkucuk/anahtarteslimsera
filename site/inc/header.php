@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="<?= e(asset('css/site.css')) ?>">
 
-<link rel="icon" href="<?= e(url('/favicon.svg')) ?>" type="image/svg+xml">
-<link rel="apple-touch-icon" href="<?= e(url('/assets/img/og-anahtar-teslim-sera.jpg')) ?>">
+<link rel="icon" href="<?= e(root_url('/favicon.svg')) ?>" type="image/svg+xml">
+<link rel="apple-touch-icon" href="<?= e(root_url('/assets/img/og-anahtar-teslim-sera.jpg')) ?>">
 <link rel="sitemap" type="application/xml" href="<?= e(url('/sitemap.xml')) ?>">
 
 <?php seo_schema($page); ?>
@@ -34,7 +34,7 @@ gtag('js',new Date());gtag('config','<?= e(GA4_ID) ?>');
 <header class="site-head">
   <div class="wrap head-inner">
     <a class="brand" href="<?= e(url('/')) ?>">
-      <img class="brand-mark" src="<?= e(url('/favicon.svg')) ?>" alt="" width="34" height="34" aria-hidden="true">
+      <img class="brand-mark" src="<?= e(root_url('/favicon.svg')) ?>" alt="" width="34" height="34" aria-hidden="true">
       <span class="brand-text">
         <span class="brand-name">ANAHTAR TESLİM SERA</span>
         <span class="brand-tag"><?= e(t('brand.tag', 'Entegre Tarım Çözümleri')) ?></span>

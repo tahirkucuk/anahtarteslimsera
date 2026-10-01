@@ -34,13 +34,22 @@ function url(string $path = '/'): string
     return $prefix . BASE_PATH . '/' . ltrim($path, '/');
 }
 
-/** Mutlak bağlantı (canonical, OG, sitemap için) */
+/** Mutlak bağlantı — dil önekli (canonical, iç bağlantılar) */
 function abs_url(string $path = '/'): string
 {
     if (preg_match('#^https?://#', $path)) {
         return $path;
     }
     return rtrim(SITE_URL, '/') . url($path);
+}
+
+/** Mutlak bağlantı — dil öneksiz (OG görselleri, statik dosyalar) */
+function abs_root_url(string $path = '/'): string
+{
+    if (preg_match('#^https?://#', $path)) {
+        return $path;
+    }
+    return rtrim(SITE_URL, '/') . root_url($path);
 }
 
 /**
@@ -54,16 +63,22 @@ function lang_url(string $path, string $lang): string
     return $base . $prefix . BASE_PATH . '/' . ltrim($path, '/');
 }
 
-/** Varlık bağlantısı + sürüm damgası */
-function asset(string $path): string
+/** Dil öneki OLMADAN kök-göreli URL (asset, favicon, OG görselleri için) */
+function root_url(string $path): string
 {
-    return url('/assets/' . ltrim($path, '/')) . '?v=' . ASSET_VER;
+    return BASE_PATH . '/' . ltrim($path, '/');
 }
 
-/** Görsel dosyası (sürüm damgasız) */
+/** Varlık bağlantısı + sürüm damgası (dil öneki yok) */
+function asset(string $path): string
+{
+    return root_url('assets/' . ltrim($path, '/')) . '?v=' . ASSET_VER;
+}
+
+/** Görsel dosyası — sürüm damgasız, dil öneki yok */
 function img_src(string $name, int $w, string $ext = 'jpg'): string
 {
-    return url("/assets/img/{$name}-{$w}.{$ext}");
+    return root_url("assets/img/{$name}-{$w}.{$ext}");
 }
 
 /**
