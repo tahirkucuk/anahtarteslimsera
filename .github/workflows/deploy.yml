@@ -1,0 +1,27 @@
+name: cPanel Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update from Remote
+        run: |
+          curl -s -f -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
+            "https://cpls34.srvpanel.com:2083/execute/VersionControl/update" \
+            --data-urlencode "repository=/home/u2838272/repositories/anahtarteslimsera" \
+            -o /tmp/update.json
+          cat /tmp/update.json
+          echo ""
+
+      - name: Deploy HEAD Commit
+        run: |
+          curl -s -f -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
+            "https://cpls34.srvpanel.com:2083/execute/VersionControlDeployment/create" \
+            --data-urlencode "repository=/home/u2838272/repositories/anahtarteslimsera" \
+            -o /tmp/deploy.json
+          cat /tmp/deploy.json
+          echo ""
