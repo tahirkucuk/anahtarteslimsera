@@ -1,4 +1,4 @@
-name: cPanel Deploy
+name: Deploy via FTP
 
 on:
   push:
@@ -8,18 +8,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Update from Remote
-        run: |
-          curl -k -v -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
-            "https://cpls34.srvpanel.com:2083/execute/VersionControl/update" \
-            --data-urlencode "repository=/home/u2838272/repositories/anahtarteslimsera" \
-            2>&1 | grep -v "Authorization:"
-          echo "--- exit: $?"
+      - uses: actions/checkout@v4
 
-      - name: Deploy HEAD Commit
-        if: success()
-        run: |
-          curl -k -s -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
-            "https://cpls34.srvpanel.com:2083/execute/VersionControlDeployment/create" \
-            --data-urlencode "repository=/home/u2838272/repositories/anahtarteslimsera"
-          echo ""
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.irrigatr.com
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./site/
+          server-dir: /anahtarteslimsera.com/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/storage/**
