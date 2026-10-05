@@ -42,7 +42,7 @@
 - [x] sera-yatirimi-geri-odeme-suresi — "Sera yatırımı ne zaman geri döner? Geri ödeme hesabı nasıl yapılır?"
 - [x] sera-kurulumu-icin-arazi-secimi — "Sera kurmak için arazi seçerken nelere bakılır?"
 - [x] venlo-sera-ile-plastik-tunel-karsilastirmasi — "Venlo cam sera mi, plastik tünel mi? Hangisi size uygun?"
-- [ ] sera-kurulumunda-en-cok-yapilan-hatalar — "Sera kurarken en sık yapılan 5 hata"
+- [x] sera-kurulumunda-en-cok-yapilan-hatalar — "Sera kurarken en sık yapılan 5 hata"
 - [ ] kucuk-sera-buyuk-sera-karar — "5 dekarlık sera mı, 50 dekarlık sera mı? Ölçek kararı nasıl verilir?"
 - [ ] sera-kurulumunda-ithal-ekipman-etkisi — "Sera kurulumunda döviz ve ithal ekipman maliyeti nasıl hesaplanır?"
 - [ ] sera-fizibilite-raporu-nasil-hazirlanir — "Sera fizibilite raporu ne içerir, nasıl hazırlanır?"
