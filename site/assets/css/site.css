@@ -506,6 +506,28 @@ input:focus,select:focus,textarea:focus{border-color:var(--canopy);outline:none;
 .foot-nl-ok{color:var(--agro)}
 .foot-nl-err{color:var(--alarm)}
 
+/* Bülten popup */
+.nlp-overlay{position:fixed;inset:0;background:rgba(14,26,21,.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;backdrop-filter:blur(3px)}
+.nlp-overlay[hidden]{display:none!important}
+.nlp-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:40px 36px;max-width:440px;width:100%;position:relative;box-shadow:var(--shadow-lg);animation:nlp-in .32s cubic-bezier(.34,1.56,.64,1)}
+@keyframes nlp-in{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+.nlp-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;transition:background .15s}
+.nlp-close:hover{background:var(--canopy-soft)}
+.nlp-icon{font-size:44px;margin-bottom:14px;text-align:center}
+.nlp-title{font-size:20px;font-weight:700;color:var(--canopy);margin-bottom:8px;text-align:center;letter-spacing:-.02em}
+.nlp-desc{font-size:14.5px;color:var(--ink-2);line-height:1.65;margin-bottom:20px;text-align:center}
+.nlp-form{display:flex;flex-direction:column;gap:8px}
+.nlp-input{padding:11px 14px;border:1.5px solid var(--line-2);border-radius:10px;font-size:14px;font-family:var(--sans);background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s}
+.nlp-input:focus{border-color:var(--canopy)}
+.nlp-btn{padding:13px;background:var(--canopy);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.nlp-btn:hover{opacity:.88}
+.nlp-btn:disabled{opacity:.5;cursor:default}
+.nlp-msg{margin-top:8px;font-size:13px;line-height:1.5;text-align:center}
+.nlp-ok{color:var(--agro)}
+.nlp-err{color:var(--alarm)}
+.nlp-skip{margin-top:16px;font-size:12.5px;color:var(--muted);text-align:center;cursor:pointer;text-decoration:underline;text-underline-offset:2px;border:none;background:none;font-family:var(--sans);width:100%}
+.nlp-skip:hover{color:var(--ink-2)}
+
 .foot-bottom{
   margin-top:34px;padding-top:20px;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
