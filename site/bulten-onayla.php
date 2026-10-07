@@ -56,7 +56,7 @@ if (strlen($token) === 32) {
 
 // Karşılama maili — onaylayan aboneye gönder
 if ($basari && $onaylananEposta !== '') {
-    $cfgPath = dirname(__DIR__) . '/.smtp-ayar.json';
+    $cfgPath = dirname(__DIR__) . '/.smtp-ayar-sera.json';
     $cfg = is_readable($cfgPath) ? json_decode(file_get_contents($cfgPath), true) : null;
     if ($cfg && !empty($cfg['kullanici']) && !empty($cfg['sifre'])) {
         $smtpHost  = $cfg['sunucu'] ?? 'localhost';

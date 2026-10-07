@@ -25,7 +25,7 @@ if (($_POST['eylem'] ?? '') === 'durum') {
 }
 
 // SMTP config
-$cfgPath = dirname(__DIR__) . '/.smtp-ayar.json';
+$cfgPath = dirname(__DIR__) . '/.smtp-ayar-sera.json';
 $cfg = is_readable($cfgPath) ? json_decode(file_get_contents($cfgPath), true) : null;
 if (!$cfg || empty($cfg['kullanici'])) { echo json_encode(['ok'=>false,'error'=>'smtp yok']); exit; }
 
