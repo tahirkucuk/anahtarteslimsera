@@ -226,7 +226,8 @@ function bulten_smtp_abone($host, $port, $user, $pass, $to, $subject, $htmlBody,
     $h .= "MIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"$b\"\r\n";
     $body  = "--$b\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$textBody\r\n";
     $body .= "--$b\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$htmlBody\r\n--$b--";
-    $sendResp = $c($h . "\r\n" . preg_replace('/^\./m', '..', $body) . "\r\n.");
+    $msg = preg_replace('/\r?\n/', "\r\n", $h . "\r\n" . $body);
+    $sendResp = $c(preg_replace('/^\./m', '..', $msg) . "\r\n.");
     if (strpos($sendResp, '250') !== 0) { fclose($fp); return "send_fail:$sendResp"; }
     $c('QUIT');
     fclose($fp);

@@ -144,7 +144,8 @@ if ($basari && $onaylananEposta !== '') {
                     $h .= "MIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"$b\"\r\n";
                     $body  = "--$b\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$textBody\r\n";
                     $body .= "--$b\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$htmlBody\r\n--$b--";
-                    $c($h . "\r\n" . preg_replace('/^\./m', '..', $body) . "\r\n.");
+                    $msg = preg_replace('/\r?\n/', "\r\n", $h . "\r\n" . $body);
+                    $c(preg_replace('/^\./m', '..', $msg) . "\r\n.");
                 }
             }
             fwrite($fp, "QUIT\r\n"); fclose($fp);

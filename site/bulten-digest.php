@@ -211,7 +211,8 @@ function bulten_smtp_digest($host,$port,$user,$pass,$to,$subj,$html,$text) {
     $b='bd_'.md5($to.microtime());
     $hd="From: =?UTF-8?B?".base64_encode("Anahtar Teslim Sera")."?= <$user>\r\nTo: $to\r\nSubject: $subj\r\nDate: ".date('r')."\r\nMessage-ID: <".uniqid('',true)."@$h>\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"$b\"\r\n";
     $body="--$b\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$text\r\n--$b\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$html\r\n--$b--";
-    if(strpos($c($hd."\r\n".preg_replace('/^\./m','..',$body)."\r\n."),'250')!==0){fclose($fp);return false;}
+    $msg=preg_replace('/\r?\n/',"\r\n",$hd."\r\n".$body);
+    if(strpos($c(preg_replace('/^\./m','..',$msg)."\r\n."),'250')!==0){fclose($fp);return false;}
     $c('QUIT');fclose($fp);return true;
 }
 
