@@ -45,7 +45,7 @@
 - [x] sera-kurulumunda-en-cok-yapilan-hatalar — "Sera kurarken en sık yapılan 5 hata"
 - [ ] kucuk-sera-buyuk-sera-karar — "5 dekarlık sera mı, 50 dekarlık sera mı? Ölçek kararı nasıl verilir?"
 - [ ] sera-kurulumunda-ithal-ekipman-etkisi — "Sera kurulumunda döviz ve ithal ekipman maliyeti nasıl hesaplanır?"
-- [ ] sera-fizibilite-raporu-nasil-hazirlanir — "Sera fizibilite raporu ne içerir, nasıl hazırlanır?"
+- [x] sera-fizibilite-raporu-nasil-hazirlanir — "Sera fizibilite raporu ne içerir, nasıl hazırlanır?"
 
 ### Hibe & Destek
 - [ ] ipard-3-sera-hibesi-2026 — "IPARD 3 sera hibeleri 2026: kimler başvurabilir, ne kadar alınır?"
