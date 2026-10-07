@@ -193,7 +193,7 @@ if ($dil === 'en') {
 function bulten_smtp_abone($host, $port, $user, $pass, $to, $subject, $htmlBody, $textBody, $fromName)
 {
     $fp = @fsockopen(($port === 465 ? 'ssl://' : '') . $host, $port, $e, $s, 15);
-    if (!$fp) return false;
+    if (!$fp) return "connect_fail:$e:$s";
     stream_set_timeout($fp, 15);
     $r = function () use ($fp) {
         $d = '';
@@ -204,16 +204,21 @@ function bulten_smtp_abone($host, $port, $user, $pass, $to, $subject, $htmlBody,
     $r();
     $c('EHLO ' . parse_url(SITE_URL, PHP_URL_HOST));
     if ($port === 587) {
-        if (strpos($c('STARTTLS'), '220') !== 0) { fclose($fp); return false; }
-        if (!stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) { fclose($fp); return false; }
+        $tls = $c('STARTTLS');
+        if (strpos($tls, '220') !== 0) { fclose($fp); return "starttls_fail:$tls"; }
+        if (!stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) { fclose($fp); return 'crypto_fail'; }
         $c('EHLO ' . parse_url(SITE_URL, PHP_URL_HOST));
     }
     $c('AUTH LOGIN');
     $c(base64_encode($user));
-    if (strpos($c(base64_encode($pass)), '235') !== 0) { fclose($fp); return false; }
-    if (strpos($c("MAIL FROM:<$user>"), '250') !== 0) { fclose($fp); return false; }
-    if (strpos($c("RCPT TO:<$to>"), '250') !== 0) { fclose($fp); return false; }
-    if (strpos($c('DATA'), '354') !== 0) { fclose($fp); return false; }
+    $authResp = $c(base64_encode($pass));
+    if (strpos($authResp, '235') !== 0) { fclose($fp); return "auth_fail:$authResp"; }
+    $mfResp = $c("MAIL FROM:<$user>");
+    if (strpos($mfResp, '250') !== 0) { fclose($fp); return "mailfrom_fail:$mfResp"; }
+    $rcptResp = $c("RCPT TO:<$to>");
+    if (strpos($rcptResp, '250') !== 0) { fclose($fp); return "rcpt_fail:$rcptResp"; }
+    $dataResp = $c('DATA');
+    if (strpos($dataResp, '354') !== 0) { fclose($fp); return "data_fail:$dataResp"; }
     $b = 'ba_' . md5($to . time());
     $h  = "From: =?UTF-8?B?" . base64_encode($fromName) . "?= <$user>\r\n";
     $h .= "To: $to\r\nSubject: $subject\r\n";
@@ -221,9 +226,8 @@ function bulten_smtp_abone($host, $port, $user, $pass, $to, $subject, $htmlBody,
     $h .= "MIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"$b\"\r\n";
     $body  = "--$b\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$textBody\r\n";
     $body .= "--$b\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n$htmlBody\r\n--$b--";
-    if (strpos($c($h . "\r\n" . preg_replace('/^\./m', '..', $body) . "\r\n."), '250') !== 0) {
-        fclose($fp); return false;
-    }
+    $sendResp = $c($h . "\r\n" . preg_replace('/^\./m', '..', $body) . "\r\n.");
+    if (strpos($sendResp, '250') !== 0) { fclose($fp); return "send_fail:$sendResp"; }
     $c('QUIT');
     fclose($fp);
     return true;
@@ -231,11 +235,12 @@ function bulten_smtp_abone($host, $port, $user, $pass, $to, $subject, $htmlBody,
 
 $smtpHost = $cfg['sunucu'] ?? 'localhost';
 $smtpPort = (int)($cfg['port'] ?? 465);
-$ok = bulten_smtp_abone($smtpHost, $smtpPort, $cfg['kullanici'], $cfg['sifre'], $email, $subject, $htmlBody, $textBody, $fromName);
+$smtpResult = bulten_smtp_abone($smtpHost, $smtpPort, $cfg['kullanici'], $cfg['sifre'], $email, $subject, $htmlBody, $textBody, $fromName);
+$ok = ($smtpResult === true);
 
 if (!$ok) {
     @file_put_contents($logDir . '/smtp-hatalar.log',
-        date('c') . ' [bulten-abone] ' . $email . "\n", FILE_APPEND | LOCK_EX);
+        date('c') . " [bulten-abone] host=$smtpHost port=$smtpPort user={$cfg['kullanici']} to=$email err=$smtpResult\n", FILE_APPEND | LOCK_EX);
     $hata = $dil === 'en'
         ? 'Confirmation email could not be sent. Please try again later.'
         : 'Onay e-postası gönderilemedi. Lütfen daha sonra tekrar deneyin.';
