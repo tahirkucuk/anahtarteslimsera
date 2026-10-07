@@ -45,6 +45,13 @@ return [
     'foot.rights'         => 'All rights reserved.',
     'foot.privacy'        => 'Privacy Policy',
 
+    // Newsletter
+    'bulten.label'        => 'Newsletter',
+    'bulten.desc'         => 'Get notified by email when new guides are published.',
+    'bulten.placeholder'  => 'your email address',
+    'bulten.btn'          => 'Subscribe',
+    'bulten.err'          => 'Connection error. Please try again.',
+
     // --- index.php (page meta) ---
     'index.title'             => 'Turnkey Greenhouse Construction | Agricultural Solutions',
     'index.desc'              => 'Agricultural consulting, greenhouse construction and irrigation systems under one project management. Turnkey greenhouse from feasibility to first harvest — one schedule, one point of contact.',

@@ -51,6 +51,19 @@
       </div>
     </div>
 
+    <div class="foot-newsletter">
+      <p class="foot-h"><?= e(t('bulten.label', 'Bülten')) ?></p>
+      <p class="foot-nl-desc"><?= e(t('bulten.desc', 'Yeni rehberler yayınlandığında e-posta ile haberdar olun.')) ?></p>
+      <form class="foot-nl-form" id="footBultenForm" novalidate>
+        <input type="hidden" name="dil" value="<?= LANG === 'en' ? 'en' : 'tr' ?>">
+        <input type="hidden" name="page" value="footer">
+        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="email" name="email" class="foot-nl-input" placeholder="<?= e(t('bulten.placeholder', 'e-posta adresiniz')) ?>" required autocomplete="email">
+        <button type="submit" class="foot-nl-btn"><?= e(t('bulten.btn', 'Abone Ol')) ?></button>
+      </form>
+      <p class="foot-nl-msg" id="footBultenMsg" hidden></p>
+    </div>
+
     <div class="foot-bottom">
       <span>© <?= date('Y') ?> <?= e(SITE_NAME) ?>. <?= e(t('foot.rights', 'Tüm hakları saklıdır.')) ?></span>
       <span><a href="<?= e(url('/gizlilik')) ?>"><?= e(t('foot.privacy', 'Gizlilik ve KVKK')) ?></a></span>
@@ -65,5 +78,34 @@
 </a>
 
 <script src="<?= e(asset('js/site.js')) ?>" defer></script>
+<script>
+(function(){
+  var form=document.getElementById('footBultenForm');
+  if(!form)return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var msg=document.getElementById('footBultenMsg');
+    var btn=form.querySelector('button[type=submit]');
+    var email=form.querySelector('input[name=email]');
+    if(!email.value.trim()){email.focus();return;}
+    btn.disabled=true;
+    var fd=new FormData(form);
+    fetch('<?= e(rtrim(BASE_PATH, '/')) ?>/bulten-abone.php',{method:'POST',body:fd})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        msg.hidden=false;
+        msg.className='foot-nl-msg '+(d.ok?'foot-nl-ok':'foot-nl-err');
+        msg.textContent=d.mesaj||d.error||'Hata oluştu.';
+        if(d.ok)form.reset();
+        btn.disabled=false;
+      })
+      .catch(function(){
+        msg.hidden=false;msg.className='foot-nl-msg foot-nl-err';
+        msg.textContent='<?= e(t('bulten.err', 'Bağlantı hatası. Lütfen tekrar deneyin.')) ?>';
+        btn.disabled=false;
+      });
+  });
+})();
+</script>
 </body>
 </html>

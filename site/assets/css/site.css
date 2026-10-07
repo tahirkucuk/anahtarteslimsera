@@ -493,6 +493,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--canopy);outline:none;
 .partner{border-left:2px solid var(--h);padding-left:14px}
 .partner-name{display:block;font-family:var(--sans);font-weight:600;font-size:15px}
 .partner-role{display:block;font-family:var(--mono);font-size:11px;color:var(--h);letter-spacing:.05em;margin-top:3px}
+/* Bülten strip */
+.foot-newsletter{margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.foot-nl-desc{font-size:13.5px;color:var(--ink-2);margin-bottom:12px}
+.foot-nl-form{display:flex;gap:8px;flex-wrap:wrap}
+.foot-nl-input{flex:1 1 220px;min-width:0;padding:10px 14px;border:1.5px solid var(--line-2);border-radius:8px;font-size:14px;font-family:var(--sans);background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s}
+.foot-nl-input:focus{border-color:var(--canopy)}
+.foot-nl-btn{padding:10px 20px;background:var(--canopy);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.foot-nl-btn:hover{opacity:.88}
+.foot-nl-btn:disabled{opacity:.5;cursor:default}
+.foot-nl-msg{margin-top:8px;font-size:13px;line-height:1.5}
+.foot-nl-ok{color:var(--agro)}
+.foot-nl-err{color:var(--alarm)}
+
 .foot-bottom{
   margin-top:34px;padding-top:20px;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
