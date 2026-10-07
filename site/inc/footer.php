@@ -112,7 +112,7 @@
     if(!email.value.trim()){email.focus();return;}
     btn.disabled=true;
     var fd=new FormData(form);
-    fetch('<?= e(rtrim(BASE_PATH, '/')) ?>/bulten-abone.php',{method:'POST',body:fd})
+    fetch('<?= e(rtrim(BASE_PATH, '/')) ?>/bulten-abone',{method:'POST',body:fd})
       .then(function(r){return r.json();})
       .then(function(d){
         msg.hidden=false;
@@ -156,7 +156,7 @@
     var email=form.querySelector('input[name=email]');
     if(!email.value.trim()){email.focus();return;}
     btn.disabled=true;
-    fetch('<?= e(rtrim(BASE_PATH,'/')) ?>/bulten-abone.php',{method:'POST',body:new FormData(form)})
+    fetch('<?= e(rtrim(BASE_PATH,'/')) ?>/bulten-abone',{method:'POST',body:new FormData(form)})
       .then(function(r){return r.json();})
       .then(function(d){
         msg.hidden=false;
